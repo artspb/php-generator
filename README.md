@@ -1,6 +1,8 @@
 # php-generator
 Simple PHP code generator on Kotlin builders
 
+[![Build Status](https://travis-ci.org/artspb/php-generator.svg?branch=master)](https://travis-ci.org/artspb/php-generator)
+
 This project is a work in progress.
 
 # Input
