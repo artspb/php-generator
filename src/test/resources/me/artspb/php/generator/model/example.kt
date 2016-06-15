@@ -2,6 +2,25 @@ package me.artspb.php.generator.model
 
 fun generate() = php {
 
+    comment { +"normal comment" }
+    comment {
+        +"normal"
+        +"multiline"
+        +"comment"
+    }
+    comment(symbol = "#") { +"sharp comment" }
+    comment(symbol = "#") {
+        +"sharp"
+        +"multiline"
+        +"comment"
+    }
+    comment(true) { +"delimited comment" }
+    comment(true) {
+        +"delimited"
+        +"multiline"
+        +"comment"
+    }
+
     namespace("NS1\\NS2") {
         _class("NamespaceClass") {
 

@@ -1,4 +1,16 @@
 <?php
+// normal comment
+// normal
+// multiline
+// comment
+# sharp comment
+# sharp
+# multiline
+# comment
+/* delimited comment */
+/* delimited
+ multiline
+ comment */
 namespace NS1\NS2 {
     class NamespaceClass {
     }

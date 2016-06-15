@@ -16,6 +16,18 @@ class CompoundStatementTest {
     }
 
     @Test
+    fun comment() {
+        assertEquals(
+                """<?php
+// comment
+""",
+                php {
+                    comment { +"comment" }
+                }.toString()
+        )
+    }
+
+    @Test
     fun namespace() {
         assertEquals(
                 """<?php
