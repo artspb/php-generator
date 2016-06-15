@@ -43,7 +43,7 @@ abstract class CompoundStatementElement(val braces: Boolean = true) : ElementWit
 
 class Php : CompoundStatementElement(false) {
 
-    fun namespace(name: String, braces: Boolean = true, init: NamespaceDefinition.() -> Unit) =
+    fun namespace(name: String = "", braces: Boolean = true, init: NamespaceDefinition.() -> Unit) =
             initElement(NamespaceDefinition(name, braces), init)
 
     override fun generateHeader() = "<?php"

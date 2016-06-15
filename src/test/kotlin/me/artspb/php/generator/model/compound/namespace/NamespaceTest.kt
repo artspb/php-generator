@@ -17,4 +17,17 @@ namespace N;
                 }.toString()
         )
     }
+
+    @Test
+    fun namespaceGlobal() {
+        assertEquals(
+                """<?php
+namespace {
+}
+""",
+                php {
+                    namespace {}
+                }.toString()
+        )
+    }
 }

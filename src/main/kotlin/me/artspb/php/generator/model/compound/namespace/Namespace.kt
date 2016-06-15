@@ -5,12 +5,12 @@ import me.artspb.php.generator.model.ElementWithChildren
 import me.artspb.php.generator.model.INDENT
 import me.artspb.php.generator.model.compound.CompoundStatementElement
 
-class NamespaceDefinition(val name: String, braces: Boolean = true) : CompoundStatementElement(braces) {
+class NamespaceDefinition(val name: String = "", braces: Boolean = true) : CompoundStatementElement(braces) {
 
     fun use(name: String = "", modifier: String = "", init: UseDeclaration.() -> Unit) =
             initElement(UseDeclaration(name, modifier), init)
 
-    override fun generateHeader() = "namespace $name" + (if (braces) "" else ";")
+    override fun generateHeader() = "namespace" + (if (name.isNotEmpty()) " $name" else "") + (if (braces) "" else ";")
 
     override fun afterRBrace() = if (braces) super.afterRBrace() else ""
 }
