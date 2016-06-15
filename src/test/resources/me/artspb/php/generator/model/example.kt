@@ -2,7 +2,19 @@ package me.artspb.php.generator.model
 
 fun generate() = php {
 
+    namespace("NS1\\NS2") {
+        _class("NamespaceClass") {
+
+        }
+        function("namespaceFoo") {
+
+        }
+    }
+
     namespace("NS") {
+
+        use { +"""NS1\NS2\NamespaceClass""" }
+        use("NS1\\", "function") { +"NS2\\namespaceFoo" }
 
         function("foo") {
             returnType("int")

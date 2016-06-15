@@ -1,5 +1,15 @@
 <?php
+namespace NS1\NS2 {
+    class NamespaceClass {
+    }
+    function namespaceFoo() {
+    }
+}
 namespace NS {
+    use NS1\NS2\NamespaceClass;
+    use function NS1\{
+        NS2\namespaceFoo
+    };
     function foo(string $bar, $baz = 0): int {
     }
     interface QuxInterface {
