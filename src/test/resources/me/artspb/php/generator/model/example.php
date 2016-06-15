@@ -16,11 +16,17 @@ namespace NS1\NS2 {
     }
     function namespaceFoo() {
     }
+    define("NS1\\NS2\\CONSTANT1", "1");
+    define("NS1\\NS2\\CONSTANT2", "2");
 }
 namespace NS {
     use NS1\NS2\NamespaceClass as Clazz;
     use function NS1\{
         NS2\namespaceFoo
+    };
+    use const NS1\{
+        NS2\CONSTANT1,
+        NS2\CONSTANT2 as CNST
     };
     function foo(string $bar, $baz = 0): int {
     }

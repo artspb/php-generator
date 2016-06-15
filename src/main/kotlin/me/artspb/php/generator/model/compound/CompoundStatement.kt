@@ -1,15 +1,16 @@
 package me.artspb.php.generator.model.compound
 
-import me.artspb.php.generator.model.Comment
-import me.artspb.php.generator.model.ElementWithChildren
-import me.artspb.php.generator.model.INDENT
-import me.artspb.php.generator.model.appendAndTrim
+import me.artspb.php.generator.model.*
 import me.artspb.php.generator.model.compound._class.Class
 import me.artspb.php.generator.model.compound._class.Interface
 import me.artspb.php.generator.model.compound._class.Trait
 import me.artspb.php.generator.model.compound.namespace.NamespaceDefinition
 
 abstract class CompoundStatementElement(val braces: Boolean = true) : ElementWithChildren() {
+
+    operator fun String.unaryPlus() {
+        children.add(ArbitraryStatement(this))
+    }
 
     fun comment(delimited: Boolean = false, symbol: String = "//", init: Comment.() -> Unit) =
             initElement(Comment(delimited, symbol), init)

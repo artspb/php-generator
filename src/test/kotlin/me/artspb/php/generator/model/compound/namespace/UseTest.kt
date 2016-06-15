@@ -289,4 +289,146 @@ namespace N {
                     }
                 }.toString())
     }
+
+    @Test
+    fun useConstant() {
+        assertEquals(
+                """<?php
+namespace N {
+    use const NN\foo;
+}
+""",
+                php {
+                    namespace("N") {
+                        use(modifier = "const") { +"NN\\foo" }
+                    }
+                }.toString())
+    }
+
+    @Test
+    fun useConstantAlias() {
+        assertEquals(
+                """<?php
+namespace N {
+    use const NN\foo as bar;
+}
+""",
+                php {
+                    namespace("N") {
+                        use(modifier = "const") { _as("NN\\foo", "bar") }
+                    }
+                }.toString())
+    }
+
+    @Test
+    fun useTowConstants() {
+        assertEquals(
+                """<?php
+namespace N {
+    use const NN\foo, NN\NN\foo;
+}
+""",
+                php {
+                    namespace("N") {
+                        use(modifier = "const") {
+                            +"NN\\foo"
+                            +"NN\\NN\\foo"
+                        }
+                    }
+                }.toString())
+    }
+
+    @Test
+    fun useTowConstantsAliases() {
+        assertEquals(
+                """<?php
+namespace N {
+    use const NN\foo as bar, NN\NN\foo as baz;
+}
+""",
+                php {
+                    namespace("N") {
+                        use(modifier = "const") {
+                            _as("NN\\foo", "bar")
+                            _as("NN\\NN\\foo", "baz")
+                        }
+                    }
+                }.toString())
+    }
+
+    @Test
+    fun useGroupConstant() {
+        assertEquals(
+                """<?php
+namespace N {
+    use const NN\{
+        NN\foo
+    };
+}
+""",
+                php {
+                    namespace("N") {
+                        use("NN\\", "const") { +"NN\\foo" }
+                    }
+                }.toString())
+    }
+
+    @Test
+    fun useGroupConstantAlias() {
+        assertEquals(
+                """<?php
+namespace N {
+    use const NN\{
+        NN\foo as bar
+    };
+}
+""",
+                php {
+                    namespace("N") {
+                        use("NN\\", "const") { _as("NN\\foo", "bar") }
+                    }
+                }.toString())
+    }
+
+    @Test
+    fun useGroupTwoConstants() {
+        assertEquals(
+                """<?php
+namespace N {
+    use const NN\{
+        NN\foo,
+        NN\NN\foo
+    };
+}
+""",
+                php {
+                    namespace("N") {
+                        use("NN\\", "const") {
+                            +"NN\\foo"
+                            +"NN\\NN\\foo"
+                        }
+                    }
+                }.toString())
+    }
+
+    @Test
+    fun useGroupTwoConstantsAliases() {
+        assertEquals(
+                """<?php
+namespace N {
+    use const NN\{
+        NN\foo as bar,
+        NN\NN\foo as baz
+    };
+}
+""",
+                php {
+                    namespace("N") {
+                        use("NN\\", "const") {
+                            _as("NN\\foo", "bar")
+                            _as("NN\\NN\\foo", "baz")
+                        }
+                    }
+                }.toString())
+    }
 }

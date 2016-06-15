@@ -28,12 +28,18 @@ fun generate() = php {
         function("namespaceFoo") {
 
         }
+        +"""define("NS1\\NS2\\CONSTANT1", "1");"""
+        +"""define("NS1\\NS2\\CONSTANT2", "2");"""
     }
 
     namespace("NS") {
 
         use { _as("""NS1\NS2\NamespaceClass""", "Clazz") }
         use("NS1\\", "function") { +"NS2\\namespaceFoo" }
+        use("NS1\\", "const") {
+            +"NS2\\CONSTANT1"
+            _as("NS2\\CONSTANT2", "CNST")
+        }
 
         function("foo") {
             returnType("int")
