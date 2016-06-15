@@ -150,6 +150,60 @@ class Foo {
     }
 
     @Test
+    fun classWithPublicConstant() {
+        assertEquals(
+                """<?php
+class Foo {
+    public const CONSTANT = 0;
+}
+""",
+                php {
+                    _class("Foo") {
+                        const("CONSTANT", "public") {
+                            "0"
+                        }
+                    }
+                }.toString()
+        )
+    }
+
+    @Test
+    fun classWithProtectedConstant() {
+        assertEquals(
+                """<?php
+class Foo {
+    protected const CONSTANT = 0;
+}
+""",
+                php {
+                    _class("Foo") {
+                        const("CONSTANT", "protected") {
+                            "0"
+                        }
+                    }
+                }.toString()
+        )
+    }
+
+    @Test
+    fun classWithPrivateConstant() {
+        assertEquals(
+                """<?php
+class Foo {
+    private const CONSTANT = 0;
+}
+""",
+                php {
+                    _class("Foo") {
+                        const("CONSTANT", "private") {
+                            "0"
+                        }
+                    }
+                }.toString()
+        )
+    }
+
+    @Test
     fun classWithVar() {
         assertEquals(
                 """<?php

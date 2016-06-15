@@ -54,6 +54,20 @@ function foo() {
     }
 
     @Test
+    fun const() {
+        assertEquals(
+                """<?php
+const CONSTANT = 0;
+""",
+                php {
+                    const("CONSTANT") {
+                        "0"
+                    }
+                }.toString()
+        )
+    }
+
+    @Test
     fun _interface() {
         assertEquals(
                 """<?php

@@ -41,7 +41,9 @@ class ModelTest {
                 function("namespaceFoo") {
 
                 }
-                +"""define("NS1\\NS2\\CONSTANT1", "1");"""
+                const("CONSTANT1") {
+                    """"1""""
+                }
                 +"""define("NS1\\NS2\\CONSTANT2", "2");"""
             }
 
@@ -97,6 +99,9 @@ class ModelTest {
                     }
                     use("FooTrait", "BarTrait") {
                         insteadof("FooTrait::foo", "BarTrait")
+                    }
+                    const("CNST", "private") {
+                        "0"
                     }
                 }
 

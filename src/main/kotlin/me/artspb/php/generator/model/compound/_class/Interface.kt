@@ -1,6 +1,7 @@
 package me.artspb.php.generator.model.compound._class
 
 import me.artspb.php.generator.model.compound.CompoundStatementElement
+import me.artspb.php.generator.model.compound.ConstantDeclaration
 import me.artspb.php.generator.model.phpdoc.PhpDoc
 
 open class Interface(val name: String) : CompoundStatementElement() {
@@ -12,7 +13,8 @@ open class Interface(val name: String) : CompoundStatementElement() {
     open fun method(name: String, vararg modifiers: String, init: MethodDeclaration.() -> Unit): MethodDeclaration =
             initElement(InterfaceMethodDeclaration(name, *modifiers), init)
 
-    fun const(name: String, initializer: () -> String) = initElement(ConstantDeclaration(name, initializer), {})
+    fun const(name: String, vararg modifiers: String, initializer: () -> String) = 
+            initElement(ConstantDeclaration(name, *modifiers, initializer = initializer), {})
 
     fun phpdoc(init: PhpDoc.() -> Unit) = initElement(PhpDoc(), init)
 

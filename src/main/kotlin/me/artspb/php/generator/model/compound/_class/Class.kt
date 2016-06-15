@@ -1,11 +1,7 @@
 package me.artspb.php.generator.model.compound._class
 
 import me.artspb.php.generator.model.Element
-import me.artspb.php.generator.model.ElementWithChildren
-import me.artspb.php.generator.model.INDENT
-import me.artspb.php.generator.model.compound.CompoundStatementElement
 import me.artspb.php.generator.model.compound.FunctionDefinition
-import me.artspb.php.generator.model.phpdoc.PhpDoc
 
 open class Class(name: String, vararg val modifiers: String) : Interface(name) {
 
@@ -38,13 +34,11 @@ open class PropertyDeclaration(val name: String, vararg val modifiers: String, v
         builder.append(indent)
         builder.append(generateModifiers(*modifiers))
         builder.append(if (modifiers.isEmpty()) "var " else "")
-        builder.append(if (modifiers.size == 1 && modifiers.first().equals("const", true)) "" else "\$")
+        builder.append(if (modifiers.isNotEmpty() && modifiers.last().equals("const", true)) "" else "\$")
         builder.append("$name")
         builder.append(if (initializer().isNotEmpty()) " = ${initializer()}" else "")
         builder.append(";\n")
     }
 }
-
-open class ConstantDeclaration(name: String, initializer: () -> String) : PropertyDeclaration(name, "const", initializer = initializer) {}
 
 fun generateModifiers(vararg modifiers: String) = if (modifiers.isNotEmpty()) "${modifiers.joinToString(" ")} " else ""

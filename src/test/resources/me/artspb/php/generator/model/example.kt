@@ -28,7 +28,9 @@ fun generate() = php {
         function("namespaceFoo") {
 
         }
-        +"""define("NS1\\NS2\\CONSTANT1", "1");"""
+        const("CONSTANT1") {
+            """"1""""
+        }
         +"""define("NS1\\NS2\\CONSTANT2", "2");"""
     }
 

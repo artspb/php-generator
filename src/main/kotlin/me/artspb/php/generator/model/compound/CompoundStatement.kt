@@ -3,6 +3,7 @@ package me.artspb.php.generator.model.compound
 import me.artspb.php.generator.model.*
 import me.artspb.php.generator.model.compound._class.Class
 import me.artspb.php.generator.model.compound._class.Interface
+import me.artspb.php.generator.model.compound._class.PropertyDeclaration
 import me.artspb.php.generator.model.compound._class.Trait
 import me.artspb.php.generator.model.compound.namespace.NamespaceDefinition
 
@@ -17,6 +18,9 @@ abstract class CompoundStatementElement(val braces: Boolean = true) : ElementWit
 
     fun function(name: String, init: FunctionDefinition.() -> Unit) =
             initElement(FunctionDefinition(name), init)
+
+    fun const(name: String, initializer: () -> String) =
+            initElement(ConstantDeclaration(name, initializer = initializer), {})
 
     fun _interface(name: String, init: Interface.() -> Unit) =
             initElement(Interface(name), init)
@@ -70,3 +74,5 @@ open class FunctionDefinition(val name: String, braces: Boolean = true) : Compou
                 "${if (it.third().isNotEmpty()) " = ${it.third()}" else ""}"
     }.joinToString(", ")
 }
+
+class ConstantDeclaration(name: String, vararg modifiers: String, initializer: () -> String) : PropertyDeclaration(name, *modifiers, "const", initializer = initializer) {}

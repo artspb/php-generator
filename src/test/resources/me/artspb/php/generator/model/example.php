@@ -16,7 +16,7 @@ namespace NS1\NS2 {
     }
     function namespaceFoo() {
     }
-    define("NS1\\NS2\\CONSTANT1", "1");
+    const CONSTANT1 = "1";
     define("NS1\\NS2\\CONSTANT2", "2");
 }
 namespace NS {
@@ -52,6 +52,7 @@ namespace NS {
         use FooTrait, BarTrait {
             FooTrait::foo insteadof BarTrait;
         }
+        private const CNST = 0;
     }
     class BarClass extends FooClass {
         /**
