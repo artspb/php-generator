@@ -57,8 +57,28 @@ fun generate() = php {
             }
         }
 
+        trait("FooTrait") {
+            method("foo") {
+
+            }
+        }
+
+        trait("BarTrait") {
+            method("foo") {
+
+            }
+        }
+
         _class("FooClass", "abstract") {
             implements("QuxInterface")
+            use("FooTrait") {
+                _as("foo", "private")
+                _as("foo", "bar")
+                _as("foo", "private", "bar")
+            }
+            use("FooTrait", "BarTrait") {
+                insteadof("FooTrait::foo", "BarTrait")
+            }
         }
 
         _class("BarClass") {

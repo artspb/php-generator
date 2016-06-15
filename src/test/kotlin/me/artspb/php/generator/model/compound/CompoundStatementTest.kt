@@ -79,4 +79,17 @@ class Foo {
         )
     }
 
+    @Test
+    fun trait() {
+        assertEquals(
+                """<?php
+trait FooTrait {
+}
+""",
+                php {
+                    trait("FooTrait") {}
+                }.toString()
+        )
+    }
+
 }

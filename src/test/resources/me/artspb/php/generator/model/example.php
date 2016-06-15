@@ -29,7 +29,23 @@ namespace NS {
         function bar();
         const CONSTANT = "VALUE";
     }
+    trait FooTrait {
+        function foo() {
+        }
+    }
+    trait BarTrait {
+        function foo() {
+        }
+    }
     abstract class FooClass implements QuxInterface {
+        use FooTrait {
+            foo as private;
+            foo as bar;
+            foo as private bar;
+        }
+        use FooTrait, BarTrait {
+            FooTrait::foo insteadof BarTrait;
+        }
     }
     class BarClass extends FooClass {
         /**
