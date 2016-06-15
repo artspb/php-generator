@@ -107,7 +107,7 @@ class ModelTest {
                         param("string", "bar")
                         param("int", "baz")
                         _return("string")
-                        throws("Exception")
+                        throws("\\Exception")
                     }
                     method("foo", "public") {
                         returnType("string")

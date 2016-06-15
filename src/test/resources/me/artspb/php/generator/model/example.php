@@ -58,7 +58,7 @@ namespace NS {
          * @param string $bar
          * @param int $baz
          * @return string
-         * @throws Exception
+         * @throws \Exception
          */
         public function foo(string $bar, $baz = 0): string {
         }
