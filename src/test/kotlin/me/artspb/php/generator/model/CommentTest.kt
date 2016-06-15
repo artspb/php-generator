@@ -1,4 +1,4 @@
-package me.artspb.php.generator.model.compound
+package me.artspb.php.generator.model
 
 import me.artspb.php.generator.model.php
 import org.junit.Assert.assertEquals
