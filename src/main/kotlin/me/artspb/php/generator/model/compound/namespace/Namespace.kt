@@ -21,6 +21,8 @@ class UseDeclaration(val prefix: String = "", val modifier: String = "") : Eleme
         children.add(UseClause(this))
     }
 
+    fun _as(name: String, alias: String) = initElement(UseClause(name, alias), {})
+
     override fun generate(builder: StringBuilder, indent: String) {
         val groupUse = prefix.isNotEmpty()
         builder.append(indent + "use ")
@@ -35,10 +37,10 @@ class UseDeclaration(val prefix: String = "", val modifier: String = "") : Eleme
     }
 }
 
-class UseClause(val name: String) : Element {
+class UseClause(val name: String, val alias: String = "") : Element {
 
     override fun generate(builder: StringBuilder, indent: String) {
-        builder.append(indent + name)
+        builder.append(indent).append(if (alias.isNotEmpty()) "$name as $alias" else name)
     }
 
 }

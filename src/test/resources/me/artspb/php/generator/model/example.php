@@ -18,7 +18,7 @@ namespace NS1\NS2 {
     }
 }
 namespace NS {
-    use NS1\NS2\NamespaceClass;
+    use NS1\NS2\NamespaceClass as Clazz;
     use function NS1\{
         NS2\namespaceFoo
     };

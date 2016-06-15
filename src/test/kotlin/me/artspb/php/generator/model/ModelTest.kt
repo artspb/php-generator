@@ -45,7 +45,7 @@ class ModelTest {
             
             namespace("NS") {
 
-                use { +"""NS1\NS2\NamespaceClass""" }
+                use { _as("""NS1\NS2\NamespaceClass""", "Clazz") }
                 use("NS1\\", "function") { +"NS2\\namespaceFoo" }
 
                 function("foo") {
