@@ -5,8 +5,18 @@ import me.artspb.php.generator.model.INDENT
 import me.artspb.php.generator.model.appendAndTrim
 import me.artspb.php.generator.model.compound._class.Class
 import me.artspb.php.generator.model.compound._class.Interface
+import me.artspb.php.generator.model.compound.namespace.NamespaceDefinition
 
 abstract class CompoundStatementElement(val braces: Boolean = true) : ElementWithChildren() {
+
+    fun function(name: String, init: FunctionDefinition.() -> Unit) =
+            initElement(FunctionDefinition(name), init)
+
+    fun _interface(name: String, init: Interface.() -> Unit) =
+            initElement(Interface(name), init)
+
+    fun _class(name: String, vararg modifiers: String, init: Class.() -> Unit) =
+            initElement(Class(name, *modifiers), init)
 
     override fun generate(builder: StringBuilder, indent: String) {
         builder.appendAndTrim("$indent" + generateHeader() + " " + (if (braces) "{" else "")).append(afterLBrace())
@@ -25,14 +35,8 @@ abstract class CompoundStatementElement(val braces: Boolean = true) : ElementWit
 
 class Php : CompoundStatementElement(false) {
 
-    fun function(name: String, init: FunctionDefinition.() -> Unit) =
-            initElement(FunctionDefinition(name), init)
-
-    fun _interface(name: String, init: Interface.() -> Unit) =
-            initElement(Interface(name), init)
-
-    fun _class(name: String, vararg modifiers: String, init: Class.() -> Unit) =
-            initElement(Class(name, *modifiers), init)
+    fun namespace(name: String, braces: Boolean = true, init: NamespaceDefinition.() -> Unit) =
+            initElement(NamespaceDefinition(name, braces), init)
 
     override fun generateHeader() = "<?php"
     

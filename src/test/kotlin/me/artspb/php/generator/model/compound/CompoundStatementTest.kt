@@ -16,6 +16,19 @@ class CompoundStatementTest {
     }
 
     @Test
+    fun namespace() {
+        assertEquals(
+                """<?php
+namespace N {
+}
+""",
+                php {
+                    namespace("N") {}
+                }.toString()
+        )
+    }
+
+    @Test
     fun function() {
         assertEquals(
                 """<?php
