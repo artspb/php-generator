@@ -2,7 +2,6 @@ package me.artspb.php.generator.model.compound._class
 
 import me.artspb.php.generator.model.compound.CompoundStatementElement
 import me.artspb.php.generator.model.compound.ConstantDeclaration
-import me.artspb.php.generator.model.phpdoc.PhpDoc
 
 open class Interface(val name: String) : CompoundStatementElement() {
 
@@ -15,8 +14,6 @@ open class Interface(val name: String) : CompoundStatementElement() {
 
     fun const(name: String, vararg modifiers: String, initializer: () -> String) = 
             initElement(ConstantDeclaration(name, *modifiers, initializer = initializer), {})
-
-    fun phpdoc(init: PhpDoc.() -> Unit) = initElement(PhpDoc(), init)
 
     override fun generateHeader() = "interface $name" +
             (if (extendsTypes.isNotEmpty()) " extends ${extendsTypes.joinToString(", ")}" else "")

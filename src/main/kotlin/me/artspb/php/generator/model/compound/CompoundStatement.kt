@@ -6,6 +6,7 @@ import me.artspb.php.generator.model.compound._class.Interface
 import me.artspb.php.generator.model.compound._class.PropertyDeclaration
 import me.artspb.php.generator.model.compound._class.Trait
 import me.artspb.php.generator.model.compound.namespace.NamespaceDefinition
+import me.artspb.php.generator.model.phpdoc.PhpDoc
 
 abstract class CompoundStatementElement(val braces: Boolean = true) : ElementWithChildren() {
 
@@ -29,6 +30,8 @@ abstract class CompoundStatementElement(val braces: Boolean = true) : ElementWit
             initElement(Class(name, *modifiers), init)
 
     fun trait(name: String, init: Class.() -> Unit) = initElement(Trait(name), init)
+
+    fun phpdoc(init: PhpDoc.() -> Unit) = initElement(PhpDoc(), init)
 
     override fun generate(builder: StringBuilder, indent: String) {
         builder.appendAndTrim("$indent" + generateHeader() + " " + (if (braces) "{" else "")).append(afterLBrace())
