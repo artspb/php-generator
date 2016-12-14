@@ -35,7 +35,7 @@ open class PropertyDeclaration(val name: String, vararg val modifiers: String, v
         builder.append(generateModifiers(*modifiers))
         builder.append(if (modifiers.isEmpty()) "var " else "")
         builder.append(if (modifiers.isNotEmpty() && modifiers.last().equals("const", true)) "" else "\$")
-        builder.append("$name")
+        builder.append(name)
         builder.append(if (initializer().isNotEmpty()) " = ${initializer()}" else "")
         builder.append(";\n")
     }

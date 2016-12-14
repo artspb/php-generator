@@ -25,7 +25,7 @@ abstract class ElementWithChildren : Element {
     }
 }
 
-fun StringBuilder.appendAndTrim(str: String) = this.append(str.trimEnd(' '))
+fun StringBuilder.appendAndTrim(str: String) = this.append(str.trimEnd(' '))!!
 
 fun php(init: Php.() -> Unit): Php {
     val php = Php()

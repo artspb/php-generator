@@ -40,11 +40,11 @@ abstract class CompoundStatementElement(val braces: Boolean = true) : ElementWit
     fun phpdoc(init: PhpDoc.() -> Unit) = initElement(PhpDoc(), init)
 
     override fun generate(builder: StringBuilder, indent: String) {
-        builder.appendAndTrim("$indent" + generateHeader() + " " + (if (braces) "{" else "")).append(afterLBrace())
+        builder.appendAndTrim(indent + generateHeader() + " " + (if (braces) "{" else "")).append(afterLBrace())
         for (c in children) {
             c.generate(builder, indent + if (braces) INDENT else "")
         }
-        builder.appendAndTrim("$indent" + (if (braces) "}" else "")).append(afterRBrace())
+        builder.appendAndTrim(indent + (if (braces) "}" else "")).append(afterRBrace())
     }
 
     abstract protected fun generateHeader(): String
@@ -78,9 +78,7 @@ open class FunctionDefinition(val name: String, braces: Boolean = true) : Compou
     override fun generateHeader() = "function $name(${generateParameters()})" + (if (returnType.isNotEmpty()) ": $returnType" else "")
 
     private fun generateParameters() = parameters.map {
-        "${if (it.second.isNotEmpty()) "${it.second} " else ""}" +
-                "\$" + "${it.first}" +
-                "${if (it.third().isNotEmpty()) " = ${it.third()}" else ""}"
+        (if (it.second.isNotEmpty()) "${it.second} " else "") + "\$" + it.first + if (it.third().isNotEmpty()) " = ${it.third()}" else ""
     }.joinToString(", ")
 }
 
