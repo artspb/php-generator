@@ -26,6 +26,13 @@ abstract class CompoundStatementElement(val braces: Boolean = true) : ElementWit
     fun foreach(array: String, key: String = "", value: String, init: ForeachStatement.() -> Unit) = 
             initElement(ForeachStatement(array, key, value), init)
 
+    fun _try(init: TryStatement.() -> Unit) = initElement(TryStatement(), init)
+
+    fun catch(exception: String, variable: String, init: CatchStatement.() -> Unit) = 
+            initElement(CatchStatement(exception, variable), init) // TODO think how to make catch depending on _try
+
+    fun finally(init: FinallyStatement.() -> Unit) = initElement(FinallyStatement(), init) // TODO think how to make finally depending on _try
+
     fun const(name: String, initializer: () -> String) =
             initElement(ConstantDeclaration(name, initializer = initializer), {})
 
@@ -88,6 +95,18 @@ class ForStatement(val expr1: String, val expr2: String, val expr3: String) : Co
 
 class ForeachStatement(val array: String, val key: String, val value: String) : CompoundStatementElement() {
     override fun generateHeader() = "foreach ($array as ${if (key.isNotEmpty()) "$key => " else ""}$value)"
+}
+
+class TryStatement() : CompoundStatementElement() {
+    override fun generateHeader() = "try"
+}
+
+class CatchStatement(val exception: String, val variable: String) : CompoundStatementElement() {
+    override fun generateHeader() = "catch ($exception $variable)"
+}
+
+class FinallyStatement() : CompoundStatementElement() {
+    override fun generateHeader() = "finally"
 }
 
 class ConstantDeclaration(name: String, vararg modifiers: String, initializer: () -> String) : PropertyDeclaration(name, *modifiers, "const", initializer = initializer) {}

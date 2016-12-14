@@ -80,6 +80,25 @@ foreach ([] as ${'$'}key => ${'$'}value) {
     }
 
     @Test
+    fun try_catch_finally() {
+        assertEquals(
+                """<?php
+try {
+}
+catch (Exception ${'$'}e) {
+}
+finally {
+}
+""",
+                php {
+                    _try {}
+                    catch("Exception", "\$e") {}
+                    finally {}
+                }.toString()
+        )
+    }
+
+    @Test
     fun const() {
         assertEquals(
                 """<?php

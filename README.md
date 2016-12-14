@@ -75,6 +75,16 @@ fun main(args: Array<String>) = dir("/path/to/file/") {
                     +"""echo "${'$'}key = ${'$'}value";"""
                 }
 
+                _try {
+                    +"throw new \\Exception();"
+                }
+                catch("\\Exception", "\$e") {
+                    +"var_dump(\$e);"
+                }
+                finally {
+                    +"""echo "finally";"""
+                }
+
                 _interface("QuxInterface") {
                     method("foo") {
                         returnType("string")
@@ -195,6 +205,15 @@ namespace NS {
     }
     foreach (["key" => "value"] as $key => $value) {
         echo "$key = $value";
+    }
+    try {
+        throw new \Exception();
+    }
+    catch (\Exception $e) {
+        var_dump($e);
+    }
+    finally {
+        echo "finally";
     }
     interface QuxInterface {
         function foo(string $bar, $baz = 0): string;
