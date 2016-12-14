@@ -54,6 +54,32 @@ function foo() {
     }
 
     @Test
+    fun _for() {
+        assertEquals(
+                """<?php
+for (${'$'}i = 0; ${'$'}i < 10; ${'$'}i++) {
+}
+""",
+                php {
+                    _for("\$i = 0", "\$i < 10", "\$i++") {}
+                }.toString()
+        )
+    }
+
+    @Test
+    fun foreach() {
+        assertEquals(
+                """<?php
+foreach ([] as ${'$'}key => ${'$'}value) {
+}
+""",
+                php {
+                    foreach("[]", key = "\$key", value = "\$value") {}
+                }.toString()
+        )
+    }
+
+    @Test
     fun const() {
         assertEquals(
                 """<?php

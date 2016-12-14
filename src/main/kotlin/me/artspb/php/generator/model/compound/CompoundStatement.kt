@@ -20,6 +20,12 @@ abstract class CompoundStatementElement(val braces: Boolean = true) : ElementWit
     fun function(name: String, init: FunctionDefinition.() -> Unit) =
             initElement(FunctionDefinition(name), init)
 
+    fun _for(expr1: String = "", expr2: String = "", expr3: String = "", init: ForStatement.() -> Unit) = 
+            initElement(ForStatement(expr1, expr2, expr3), init)
+
+    fun foreach(array: String, key: String = "", value: String, init: ForeachStatement.() -> Unit) = 
+            initElement(ForeachStatement(array, key, value), init)
+
     fun const(name: String, initializer: () -> String) =
             initElement(ConstantDeclaration(name, initializer = initializer), {})
 
@@ -76,6 +82,14 @@ open class FunctionDefinition(val name: String, braces: Boolean = true) : Compou
                 "\$" + "${it.first}" +
                 "${if (it.third().isNotEmpty()) " = ${it.third()}" else ""}"
     }.joinToString(", ")
+}
+
+class ForStatement(val expr1: String, val expr2: String, val expr3: String) : CompoundStatementElement() {
+    override fun generateHeader() = "for ($expr1; $expr2; $expr3)"
+}
+
+class ForeachStatement(val array: String, val key: String, val value: String) : CompoundStatementElement() {
+    override fun generateHeader() = "foreach ($array as ${if (key.isNotEmpty()) "$key => " else ""}$value)"
 }
 
 class ConstantDeclaration(name: String, vararg modifiers: String, initializer: () -> String) : PropertyDeclaration(name, *modifiers, "const", initializer = initializer) {}

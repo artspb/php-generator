@@ -63,6 +63,18 @@ fun main(args: Array<String>) = dir("/path/to/file/") {
                     }
                 }
 
+                _for("\$i = 0", "\$i < 10", "\$i++") {
+                    +"echo \$i;"
+                }
+
+                foreach("array()", value = "\$value") {
+                    +"echo \$value;"
+                }
+
+                foreach("""["key" => "value"]""", key = "\$key", value = "\$value") {
+                    +"""echo "${'$'}key = ${'$'}value";"""
+                }
+
                 _interface("QuxInterface") {
                     method("foo") {
                         returnType("string")
@@ -174,6 +186,15 @@ namespace NS {
         NS2\CONSTANT2 as CNST
     };
     function foo(string $bar, $baz = 0): int {
+    }
+    for ($i = 0; $i < 10; $i++) {
+        echo $i;
+    }
+    foreach (array() as $value) {
+        echo $value;
+    }
+    foreach (["key" => "value"] as $key => $value) {
+        echo "$key = $value";
     }
     interface QuxInterface {
         function foo(string $bar, $baz = 0): string;
