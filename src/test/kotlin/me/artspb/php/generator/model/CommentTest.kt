@@ -1,6 +1,5 @@
 package me.artspb.php.generator.model
 
-import me.artspb.php.generator.model.php
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

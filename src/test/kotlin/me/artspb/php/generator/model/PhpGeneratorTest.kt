@@ -1,6 +1,6 @@
 package me.artspb.php.generator.model
 
-import dir
+import me.artspb.php.generator.dir
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test

@@ -1,3 +1,5 @@
+package me.artspb.php.generator
+
 import me.artspb.php.generator.model.compound.Php
 import java.io.File
 
