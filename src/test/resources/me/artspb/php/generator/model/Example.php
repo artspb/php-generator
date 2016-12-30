@@ -30,6 +30,24 @@ namespace NS {
     };
     function foo(string $bar, $baz = 0): int {
     }
+    for ($i = 0; $i < 10; $i++) {
+        echo $i;
+    }
+    foreach (array() as $value) {
+        echo $value;
+    }
+    foreach (["key" => "value"] as $key => $value) {
+        echo "$key = $value";
+    }
+    try {
+        throw new \Exception();
+    }
+    catch (\Exception $e) {
+        var_dump($e);
+    }
+    finally {
+        echo "finally";
+    }
     interface QuxInterface {
         function foo(string $bar, $baz = 0): string;
         function bar();
