@@ -2,6 +2,7 @@ package me.artspb.php.generator
 
 import me.artspb.php.generator.model.compound.Php
 import java.io.File
+import java.util.*
 
 fun dir(path: String, nodes: DirNode.() -> Unit): DirNode {
     val dir = DirNode(path)
@@ -10,22 +11,17 @@ fun dir(path: String, nodes: DirNode.() -> Unit): DirNode {
 }
 
 interface Node {
-    fun create(relativePath: String = ""): Unit
+    fun create(relativePath: String = "")
 }
 
-class FileNode(val name: String, val php: () -> Php) : Node {
+class FileNode(private val name: String, val php: () -> Php) : Node {
     override fun create(relativePath: String) = File(relativePath + name).printWriter().use { out -> out.print(php().toString()) }
 }
 
 class DirNode(path: String) : Node {
 
-    val path: String
-
-    init {
-        this.path = if (path.endsWith('/') || path.endsWith('\\')) path else path + File.separator
-    }
-
-    val children = arrayListOf<Node>()
+    private val path = if (path.endsWith('/') || path.endsWith('\\')) path else path + File.separator
+    private val children = ArrayDeque<Node>()
 
     fun file(name: String, php: () -> Php) = createNode(FileNode(name, php), {})
 
@@ -39,8 +35,8 @@ class DirNode(path: String) : Node {
 
     override fun create(relativePath: String) {
         File(relativePath + path).mkdirs()
-        for (child in children) {
-            child.create(relativePath + path)
+        while (children.isNotEmpty()) {
+            children.poll().create(relativePath + path)
         }
     }
 }

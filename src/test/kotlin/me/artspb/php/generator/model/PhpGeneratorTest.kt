@@ -2,6 +2,7 @@ package me.artspb.php.generator.model
 
 import me.artspb.php.generator.dir
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -47,5 +48,21 @@ class TestClass {
 """,
                 String(FileInputStream(File(dir, "temp/temp.php")).readBytes())
         )
+    }
+
+    @Test
+    fun creatingFilesRecursively() {
+        val dir = root.newFolder().path
+        dir(dir) {
+            file("foo.php") {
+                php {
+                    this@dir.file("bar.php") {
+                        php {}
+                    }
+                }
+            }
+        }.create()
+        assertTrue(File(dir, "foo.php").exists())
+        assertTrue(File(dir, "bar.php").exists())
     }
 }
