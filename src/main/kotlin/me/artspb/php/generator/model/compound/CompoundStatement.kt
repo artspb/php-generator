@@ -20,15 +20,15 @@ abstract class CompoundStatementElement(val braces: Boolean = true) : ElementWit
     fun function(name: String, init: FunctionDefinition.() -> Unit) =
             initElement(FunctionDefinition(name), init)
 
-    fun _for(expr1: String = "", expr2: String = "", expr3: String = "", init: ForStatement.() -> Unit) = 
+    fun _for(expr1: String = "", expr2: String = "", expr3: String = "", init: ForStatement.() -> Unit) =
             initElement(ForStatement(expr1, expr2, expr3), init)
 
-    fun foreach(array: String, key: String = "", value: String, init: ForeachStatement.() -> Unit) = 
+    fun foreach(array: String, key: String = "", value: String, init: ForeachStatement.() -> Unit) =
             initElement(ForeachStatement(array, key, value), init)
 
     fun _try(init: TryStatement.() -> Unit) = initElement(TryStatement(), init)
 
-    fun catch(exception: String, variable: String, init: CatchStatement.() -> Unit) = 
+    fun catch(exception: String, variable: String, init: CatchStatement.() -> Unit) =
             initElement(CatchStatement(exception, variable), init) // TODO think how to make catch depending on _try
 
     fun finally(init: FinallyStatement.() -> Unit) = initElement(FinallyStatement(), init) // TODO think how to make finally depending on _try
@@ -54,11 +54,11 @@ abstract class CompoundStatementElement(val braces: Boolean = true) : ElementWit
         builder.appendAndTrim(indent + (if (braces) "}" else "")).append(afterRBrace())
     }
 
-    abstract protected fun generateHeader(): String
-    
-    open protected fun afterLBrace() = "\n"
-    
-    open protected fun afterRBrace() = "\n"
+    protected abstract fun generateHeader(): String
+
+    protected open fun afterLBrace() = "\n"
+
+    protected open fun afterRBrace() = "\n"
 }
 
 class Php : CompoundStatementElement(false) {
@@ -67,11 +67,11 @@ class Php : CompoundStatementElement(false) {
             initElement(NamespaceDefinition(name, braces), init)
 
     override fun generateHeader() = "<?php"
-    
+
     override fun afterRBrace() = ""
 }
 
-open class FunctionDefinition(val name: String, braces: Boolean = true) : CompoundStatementElement(braces) {
+open class FunctionDefinition(private val name: String, braces: Boolean = true) : CompoundStatementElement(braces) {
 
     private var returnType = ""
     private val parameters = arrayListOf<Triple<String, String, () -> String>>()
@@ -80,33 +80,34 @@ open class FunctionDefinition(val name: String, braces: Boolean = true) : Compou
         this.returnType = returnType
     }
 
-    fun parameter(name: String, type: String = "", defaultValue: () -> String = {""}) = parameters.add(Triple(name, type, defaultValue))
+    fun parameter(name: String, type: String = "", defaultValue: () -> String = { "" }) = parameters.add(Triple(name, type, defaultValue))
 
     override fun generateHeader() = "function $name(${generateParameters()})" + (if (returnType.isNotEmpty()) ": $returnType" else "")
 
-    private fun generateParameters() = parameters.map {
+    private fun generateParameters() = parameters.joinToString(", ") {
         (if (it.second.isNotEmpty()) "${it.second} " else "") + "\$" + it.first + if (it.third().isNotEmpty()) " = ${it.third()}" else ""
-    }.joinToString(", ")
+    }
 }
 
-class ForStatement(val expr1: String, val expr2: String, val expr3: String) : CompoundStatementElement() {
+class ForStatement(private val expr1: String, private val expr2: String, private val expr3: String) : CompoundStatementElement() {
     override fun generateHeader() = "for ($expr1; $expr2; $expr3)"
 }
 
-class ForeachStatement(val array: String, val key: String, val value: String) : CompoundStatementElement() {
+class ForeachStatement(private val array: String, private val key: String, private val value: String) : CompoundStatementElement() {
     override fun generateHeader() = "foreach ($array as ${if (key.isNotEmpty()) "$key => " else ""}$value)"
 }
 
-class TryStatement() : CompoundStatementElement() {
+class TryStatement : CompoundStatementElement() {
     override fun generateHeader() = "try"
 }
 
-class CatchStatement(val exception: String, val variable: String) : CompoundStatementElement() {
+class CatchStatement(private val exception: String, private val variable: String) : CompoundStatementElement() {
     override fun generateHeader() = "catch ($exception $variable)"
 }
 
-class FinallyStatement() : CompoundStatementElement() {
+class FinallyStatement : CompoundStatementElement() {
     override fun generateHeader() = "finally"
 }
 
-class ConstantDeclaration(name: String, vararg modifiers: String, initializer: () -> String) : PropertyDeclaration(name, *modifiers, "const", initializer = initializer) {}
+class ConstantDeclaration(name: String, vararg modifiers: String, initializer: () -> String)
+    : PropertyDeclaration(name, *modifiers, "const", initializer = initializer)

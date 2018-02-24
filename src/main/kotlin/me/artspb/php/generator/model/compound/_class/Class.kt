@@ -3,7 +3,7 @@ package me.artspb.php.generator.model.compound._class
 import me.artspb.php.generator.model.Element
 import me.artspb.php.generator.model.compound.FunctionDefinition
 
-open class Class(name: String, vararg val modifiers: String) : Interface(name) {
+open class Class(name: String, private vararg val modifiers: String) : Interface(name) {
 
     private val implementsTypes = arrayListOf<String>()
 
@@ -23,12 +23,13 @@ open class Class(name: String, vararg val modifiers: String) : Interface(name) {
             (if (implementsTypes.isNotEmpty()) " implements ${implementsTypes.joinToString(", ")}" else "")
 }
 
-open class MethodDeclaration(name: String, vararg val modifiers: String, braces: Boolean = true) : FunctionDefinition(name, braces) {
+open class MethodDeclaration(name: String, private vararg val modifiers: String, braces: Boolean = true) : FunctionDefinition(name, braces) {
 
     override fun generateHeader() = generateModifiers(*modifiers) + super.generateHeader()
 }
 
-open class PropertyDeclaration(val name: String, vararg val modifiers: String, val initializer: () -> String) : Element {
+open class PropertyDeclaration(private val name: String, private vararg val modifiers: String,
+                               val initializer: () -> String) : Element {
 
     override fun generate(builder: StringBuilder, indent: String) {
         builder.append(indent)

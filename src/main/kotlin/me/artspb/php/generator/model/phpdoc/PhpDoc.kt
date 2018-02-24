@@ -25,16 +25,17 @@ open class PhpDoc : ElementWithChildren() {
     }
 }
 
-abstract class PhpDocTag(val tag: String) : Element {
+abstract class PhpDocTag(private val tag: String) : Element {
 
     override fun generate(builder: StringBuilder, indent: String) {
         builder.append("@$tag " + generateContents())
     }
 
-    abstract protected fun generateContents(): String
+    protected abstract fun generateContents(): String
 }
 
-class TypeNameDescriptionPhpDocTag(tag: String, val type: String, val name: String = "", val description: String = "") : PhpDocTag(tag) {
+class TypeNameDescriptionPhpDocTag(tag: String, private val type: String, private val name: String = "", 
+                                   private val description: String = "") : PhpDocTag(tag) {
     override fun generateContents() = type +
             (if (name.isNotEmpty()) " \$" + name else "") +
             (if (description.isNotEmpty()) " $description" else "")

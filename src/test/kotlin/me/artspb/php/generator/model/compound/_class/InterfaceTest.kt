@@ -7,7 +7,7 @@ import org.junit.Test
 class InterfaceTest {
 
     @Test
-    fun _interfaceExtends() {
+    fun interfaceExtends() {
         assertEquals(
                 """<?php
 interface Foo extends Bar {

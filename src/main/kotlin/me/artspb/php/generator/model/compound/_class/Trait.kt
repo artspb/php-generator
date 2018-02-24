@@ -8,7 +8,7 @@ class Trait(name: String) : Class(name) {
     override fun generateHeader() = "trait $name"
 }
 
-class TraitUse(vararg val names: String) : ElementWithChildren() {
+class TraitUse(private vararg val names: String) : ElementWithChildren() {
 
     fun insteadof(name1: String, name2: String) =
             initElement(TraitUseSpecification(name1, "insteadof", name2 = name2), {})
@@ -33,7 +33,8 @@ class TraitUse(vararg val names: String) : ElementWithChildren() {
     }
 }
 
-class TraitUseSpecification(val name1: String, val keyword: String, val modifier: String = "", val name2: String = "") : Element {
+class TraitUseSpecification(private val name1: String, private val keyword: String,
+                            private val modifier: String = "", val name2: String = "") : Element {
     override fun generate(builder: StringBuilder, indent: String) {
         builder.append(indent)
         builder.append("$name1 $keyword")

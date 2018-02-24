@@ -11,7 +11,9 @@ import java.io.FileInputStream
 
 class PhpGeneratorTest {
 
-    @get:Rule val root = TemporaryFolder()
+    @Suppress("MemberVisibilityCanBePrivate")
+    @get:Rule
+    val root = TemporaryFolder()
 
     @Test
     fun hierarchy() {
@@ -20,7 +22,7 @@ class PhpGeneratorTest {
             file("foo.php") {
                 php {
                     function("foo") {
-                        
+
                     }
                 }
             }

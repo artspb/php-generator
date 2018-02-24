@@ -10,8 +10,12 @@ import kotlin.reflect.KClass
 
 class ModelTest {
 
-    @get:Rule var name = TestName()
-    @get:Rule var dir = TemporaryFolder()
+    @Suppress("MemberVisibilityCanBePrivate")
+    @get:Rule
+    var name = TestName()
+    @Suppress("MemberVisibilityCanBePrivate")
+    @get:Rule
+    var dir = TemporaryFolder()
 
     @Test
     fun example() {
@@ -21,5 +25,5 @@ class ModelTest {
         assertEquals(ModelTest::class.resourceToString(file), File(path, file).readText())
     }
 
-    fun <T : Any> KClass<T>.resourceToString(resource: String) = String(this.java.getResourceAsStream(resource).readBytes())
+    private fun <T : Any> KClass<T>.resourceToString(resource: String) = String(this.java.getResourceAsStream(resource).readBytes())
 }

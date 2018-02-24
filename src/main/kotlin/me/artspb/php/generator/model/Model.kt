@@ -2,7 +2,7 @@ package me.artspb.php.generator.model
 
 import me.artspb.php.generator.model.compound.Php
 
-val INDENT = "    " // TODO make property
+const val INDENT = "    " // TODO make property
 
 interface Element {
     fun generate(builder: StringBuilder, indent: String)

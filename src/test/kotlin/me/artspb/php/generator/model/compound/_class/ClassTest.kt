@@ -7,7 +7,7 @@ import org.junit.Test
 class ClassTest {
 
     @Test
-    fun _classExtends() {
+    fun classExtends() {
         assertEquals(
                 """<?php
 class Foo extends Bar {
@@ -22,7 +22,7 @@ class Foo extends Bar {
     }
 
     @Test
-    fun _classImplements() {
+    fun classImplements() {
         assertEquals(
                 """<?php
 class Foo implements Baz {
@@ -37,7 +37,7 @@ class Foo implements Baz {
     }
 
     @Test
-    fun _classExtendsImplements() {
+    fun classExtendsImplements() {
         assertEquals(
                 """<?php
 class Foo extends Bar implements Baz {
@@ -53,7 +53,7 @@ class Foo extends Bar implements Baz {
     }
 
     @Test
-    fun _classAbstract() {
+    fun classAbstract() {
         assertEquals(
                 """<?php
 abstract class Foo {
@@ -66,7 +66,7 @@ abstract class Foo {
     }
 
     @Test
-    fun _classFinal() {
+    fun classFinal() {
         assertEquals(
                 """<?php
 final class Foo {
@@ -79,7 +79,7 @@ final class Foo {
     }
 
     @Test
-    fun _classFinalAbstract() {
+    fun classFinalAbstract() {
         assertEquals(
                 """<?php
 final abstract class Foo {

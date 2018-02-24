@@ -1,6 +1,6 @@
 package me.artspb.php.generator.model
 
-class Comment(val delimited: Boolean = false, val symbol: String = "//") : ElementWithChildren() {
+class Comment(private val delimited: Boolean = false, private val symbol: String = "//") : ElementWithChildren() {
 
     operator fun String.unaryPlus() {
         children.add(CommentLine(this, if (delimited) "" else symbol))
@@ -17,7 +17,7 @@ class Comment(val delimited: Boolean = false, val symbol: String = "//") : Eleme
     }
 }
 
-class CommentLine(val line: String, val symbol: String = "//") : Element {
+class CommentLine(private val line: String, private val symbol: String = "//") : Element {
     override fun generate(builder: StringBuilder, indent: String) {
         builder.append("$indent$symbol $line")
     }

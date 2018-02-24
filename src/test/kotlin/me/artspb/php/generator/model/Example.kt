@@ -137,7 +137,7 @@ fun main(args: Array<String>) = dir(args[0]) {
 
                     method("bar") {}
 
-                    property("qux");
+                    property("qux")
 
                     const("TMP_CNST") {
                         "100500"
